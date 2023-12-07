@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Infinotes - Home</title>
+    <!-- Bootstrap CSS for basic styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f7f7f7;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            max-width: 700px;
+            margin: 100px auto;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+        }
+        .btn {
+            width: 200px;
+            font-size: 1.1rem;
+            margin: 10px;
+        }
+        .btn-primary {
+            background-color: #3d70b2;
+            border-color: #3d70b2;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Welcome to Infinotes!</h1>
+    <p>Your reliable note-taking application.</p>
+
+    <!-- Login Button -->
+    <a th:href="@{/login}" class="btn btn-primary">Login</a>
+
+    <!-- Sign Up Button -->
+    <a th:href="@{/signup}" class="btn btn-outline-secondary">Sign Up</a>
+</div>
+
+<!-- Bootstrap JS, Popper.js, and jQuery -->
+<!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+
+</body>
+</html>
