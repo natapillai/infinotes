@@ -12,7 +12,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -46,11 +48,13 @@ public class SecurityConfig {
 			)
 			.formLogin((form) -> form
 				.loginPage("/login")
+//				.failureHandler(customFailureHandler())
 				.permitAll()
 				.usernameParameter("username")
 				.passwordParameter("password")
 				.successHandler(authSuccessHandler())
 				.failureUrl("/login?error=true")
+				
 			)
 			.authenticationManager(authenticationManager(http))
 			.logout((logout) -> logout
@@ -79,6 +83,11 @@ public class SecurityConfig {
 	@Bean
 	AuthenticationSuccessHandler authSuccessHandler() {
 		return new CustomAuthSuccessHandler();
+	}
+	
+	@Bean
+	AuthenticationFailureHandler customFailureHandler() {
+		return new CustomFailureHandler();
 	}
 	
 }

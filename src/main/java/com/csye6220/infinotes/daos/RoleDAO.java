@@ -37,7 +37,8 @@ private SessionFactory sf = HibernateUtils.getSessionFactory();
 	public void addRole(Role role) {
 		
 		try {
-			session = sf.getCurrentSession();
+//			session = sf.getCurrentSession();
+			session = sf.openSession();
 			
 			begin();
 			
@@ -47,7 +48,7 @@ private SessionFactory sf = HibernateUtils.getSessionFactory();
 			
 		} finally {
 			
-			closeAll();
+//			closeAll();
 			
 		}
 		
@@ -57,7 +58,8 @@ private SessionFactory sf = HibernateUtils.getSessionFactory();
 	public Role findRoleByID(int id) {
 		
 		try {
-			session = sf.getCurrentSession();
+//			session = sf.getCurrentSession();
+			session = sf.openSession();	
 			
 			begin();
 			
@@ -73,7 +75,7 @@ private SessionFactory sf = HibernateUtils.getSessionFactory();
 			
 		} finally {
 			
-			closeAll();
+//			closeAll();
 			
 		}
 		
@@ -83,7 +85,8 @@ private SessionFactory sf = HibernateUtils.getSessionFactory();
 	public Iterable getRoles(int id) {
 		
 		try {
-			session = sf.getCurrentSession();
+//			session = sf.getCurrentSession();
+			session = sf.openSession();
 			
 			begin();
 			
@@ -99,7 +102,7 @@ private SessionFactory sf = HibernateUtils.getSessionFactory();
 			
 		} finally {
 
-			closeAll();
+//			closeAll();
 			
 		}
 		
@@ -109,7 +112,8 @@ private SessionFactory sf = HibernateUtils.getSessionFactory();
 	public void updateRole(Role role) {
 		
 		try {
-			session = sf.getCurrentSession();
+//			session = sf.getCurrentSession();
+			session = sf.openSession();	
 			
 			begin();
 			
@@ -119,7 +123,7 @@ private SessionFactory sf = HibernateUtils.getSessionFactory();
 			
 		} finally {
 			
-			closeAll();
+//			closeAll();
 			
 		}
 		
@@ -129,7 +133,8 @@ private SessionFactory sf = HibernateUtils.getSessionFactory();
 	public void deleteRole(Role role) {
 		
 		try {
-			session = sf.getCurrentSession();
+//			session = sf.getCurrentSession();
+			session = sf.openSession();
 			
 			begin();
 			
@@ -139,7 +144,7 @@ private SessionFactory sf = HibernateUtils.getSessionFactory();
 			
 		} finally {
 
-			closeAll();
+//			closeAll();
 			
 		}
 		

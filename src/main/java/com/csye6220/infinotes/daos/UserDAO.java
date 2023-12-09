@@ -8,6 +8,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.csye6220.infinotes.pojos.Note;
 import com.csye6220.infinotes.pojos.Role;
 import com.csye6220.infinotes.pojos.User;
 import com.csye6220.infinotes.services.RoleService;
@@ -41,7 +42,8 @@ public class UserDAO implements UserDAOInterface{
 		
 		try {
 			
-			session = sf.getCurrentSession();
+//			session = sf.getCurrentSession();
+			session = sf.openSession();
 			
 			begin();
 			
@@ -62,7 +64,8 @@ public class UserDAO implements UserDAOInterface{
 		
 		
 		try {
-			session = sf.getCurrentSession();
+//			session = sf.getCurrentSession();
+			session = sf.openSession();
 			
 			begin();
 			
@@ -70,7 +73,7 @@ public class UserDAO implements UserDAOInterface{
 			
 			Role role = new Role();
 			
-			role.setRoleName("user");
+			role.setRoleName("User");
 			role.setUser(u);
 			
 			u.addUserRole(role);
@@ -84,12 +87,49 @@ public class UserDAO implements UserDAOInterface{
 		}
 		
 	}
+	
+	
+	@Override
+	public void saveNote(User user, Note note) {
+		try {
+//			session = sf.getCurrentSession();
+			session = sf.openSession();
+			
+			begin();
+			
+			User u = session.get(User.class, user.getId());
+			
+			Note n = new Note();
+			
+			n.setUser(u);
+			
+			n.setNoteTitle(note.getNoteTitle());
+			n.setNoteContent(note.getNoteContent());
+			n.setNoteCreatedDate(note.getNoteCreatedDate());
+			n.setNoteLastModifiedDate(note.getNoteLastModifiedDate());
+			
+			
+			u.setUserNote(n);
+			
+			session.persist(n);
+			
+			commit();
+			
+		} finally {
+//			closeAll();
+		}
+		
+		
+		
+	}
+	
 
 	@Override
 	public User findByID(int id) {
 
 		try {
-			session = sf.getCurrentSession();
+//			session = sf.getCurrentSession();
+			session = sf.openSession();
 			
 			begin();
 			
@@ -119,8 +159,8 @@ public class UserDAO implements UserDAOInterface{
 			
 			System.out.println("DAO find 3");
 			
-//			begin();
-			session.beginTransaction();
+			begin();
+//			session.beginTransaction();
 			System.out.println("DAO find 4");
 			
 			String queryString = "from User u where u.email = :email";
@@ -140,7 +180,11 @@ public class UserDAO implements UserDAOInterface{
 			
 			return user;
 			
-		} finally {
+		} 
+//		  catch (Exception e) {
+//			    e.printStackTrace(); // Log the exception for debugging
+//			}
+		finally {
 //			closeAll();
 		}
 	}
@@ -148,7 +192,8 @@ public class UserDAO implements UserDAOInterface{
 	@Override
 	public void update(User user) {
 		try {
-			session = sf.getCurrentSession();
+//			session = sf.getCurrentSession();
+			session = sf.openSession();
 			
 			begin();
 			
@@ -165,7 +210,8 @@ public class UserDAO implements UserDAOInterface{
 	@Override
 	public Iterable getUsers() {
 		try {
-			session = sf.getCurrentSession();
+//			session = sf.getCurrentSession();
+			session = sf.openSession();
 			
 			begin();
 			
@@ -190,7 +236,8 @@ public class UserDAO implements UserDAOInterface{
 	@Override
 	public void delete(User user) {
 		try {
-			session = sf.getCurrentSession();
+//			session = sf.getCurrentSession();
+			session = sf.openSession();
 			
 			begin();
 			

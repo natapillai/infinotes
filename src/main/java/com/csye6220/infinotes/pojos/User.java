@@ -106,5 +106,10 @@ public class User {
 	public List<Note> getUserNotes(){
 		return this.userNotes;
 	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + ", password=" + password;
+	}
 	
 }

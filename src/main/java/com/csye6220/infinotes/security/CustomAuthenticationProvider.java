@@ -43,9 +43,13 @@ public class CustomAuthenticationProvider  implements AuthenticationProvider {
 		
 		roleService.getAllRoles(user.getId()).forEach(roles::add);
 		
+		System.out.println(roles);
+		
 		System.out.println("point 3");
 		
 		Role role = roles.get(0);
+		
+		System.out.println(role + "    Current Role");
 		
 		System.out.println("point 4");
 		

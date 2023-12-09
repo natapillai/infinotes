@@ -68,6 +68,9 @@
             <label for="password">Password</label>
             <input type="password" class="form-control" id="password" name="password" required>
         </div>
+        <div th:if="${param.error}" class="alert alert-error text-danger">
+            Invalid username or password.
+        </div>
         <button type="submit" class="btn btn-primary login-button">Login</button>
     </form>
     <div class="text-center mt-4">

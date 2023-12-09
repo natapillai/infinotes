@@ -90,6 +90,8 @@ public class Note {
 		this.noteLastModifiedDate = noteLastModifiedDate;
 	}
 	
-	
+	public void setUser(User user) {
+		this.user = user;
+	}
 	
 }

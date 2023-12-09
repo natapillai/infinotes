@@ -2,6 +2,7 @@ package com.csye6220.infinotes.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.csye6220.infinotes.services.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
@@ -27,7 +29,12 @@ public class LoginController {
 //	}
 	
 	@GetMapping("/login")
-	public String loginPageHandler() {
+	public String loginPageHandler(@RequestParam(value = "error", required = false) String error, Model model, HttpSession session) {
+		
+	    
+//	    session.removeAttribute("loginError");
+	    
+	    
 		return "login-view";
 	}
 	

@@ -17,25 +17,30 @@ public class TestMain {
 //		Note note = new Note();
 //		Role role = new Role();
 //		
+//		note.setNoteTitle("Test Title");
+//		note.setNoteContent("Test Content");
+//		note.setNoteCreatedDate(java.time.LocalDateTime.now());
+//		note.setNoteLastModifiedDate(java.time.LocalDateTime.now());
 //
 //		
 //		User u = new User();
-//		u.setEmail("user");
-//		u.setPassword("user");
+//		u.setEmail("bob");
+//		u.setPassword("mclog");
 ////		u.setRole("admin");
 //		
-//		role.setRoleName("user");
-//		role.setUser(u);
+////		role.setRoleName("user");
+////		role.setUser(u);
 //		
 //		
-//		u.setUserNote(note);
-//		u.addUserRole(role);
+////		u.setUserNote(note);
+////		u.addUserRole(role);
 //		
 //		
 //		
 //		UserDAO userdao = new UserDAO();
 //		userdao.saveUser(u);
 //		userdao.saveRole(u);
+//		userdao.saveNote(u, note);
 		
 		
 //		List<User> list = userdao.getUsers();

@@ -17,8 +17,10 @@ public class CustomAuthSuccessHandler implements AuthenticationSuccessHandler{
 			Authentication authentication) throws IOException, ServletException {
 		
 		boolean isAdmin = false;
-		
+		System.out.println("AuthSuccess 1");
 		for (GrantedAuthority role : authentication.getAuthorities()) {
+			System.out.println(role.getAuthority());
+			System.out.println("AuthSuccess 2");
 			if (role.getAuthority().equals("ROLE_Admin")) {
 				isAdmin = true;
 				break;
@@ -26,9 +28,11 @@ public class CustomAuthSuccessHandler implements AuthenticationSuccessHandler{
 		}
 		
 		if(isAdmin) {
-			response.sendRedirect("/adminIndex");
+			System.out.println("AuthSuccess 3");
+			response.sendRedirect("/admin/adminIndex");
 		} else {
-			response.sendRedirect("/login");
+			System.out.println("AuthSuccess 4");
+			response.sendRedirect("/user/home");
 		}
 		
 	}
