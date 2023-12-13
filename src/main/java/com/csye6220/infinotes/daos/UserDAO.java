@@ -1,17 +1,22 @@
 package com.csye6220.infinotes.daos;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.hibernate.stat.Statistics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.csye6220.infinotes.pojos.Note;
 import com.csye6220.infinotes.pojos.Role;
 import com.csye6220.infinotes.pojos.User;
 import com.csye6220.infinotes.services.RoleService;
+import com.csye6220.infinotes.utils.FileUploadUtil;
 import com.csye6220.infinotes.utils.HibernateUtils;
 
 @Repository
@@ -54,7 +59,7 @@ public class UserDAO implements UserDAOInterface{
 		} finally {
 			
 //			closeAll();
-			
+			session.close();
 		}
 		
 	}
@@ -84,6 +89,7 @@ public class UserDAO implements UserDAOInterface{
 			
 		} finally {
 //			closeAll();
+			session.close();
 		}
 		
 	}
@@ -117,6 +123,7 @@ public class UserDAO implements UserDAOInterface{
 			
 		} finally {
 //			closeAll();
+			session.close();
 		}
 		
 		
@@ -145,38 +152,26 @@ public class UserDAO implements UserDAOInterface{
 			
 		} finally {
 //			closeAll();
+			session.close();
 		}
 
 	}
 
 	@Override
 	public User findByEmail(String email) {
-		System.out.println("DAO find 1");
 		try {
-			System.out.println("DAO find 2");
 //			session = sf.getCurrentSession();
 			session = sf.openSession();
 			
-			System.out.println("DAO find 3");
-			
 			begin();
-//			session.beginTransaction();
-			System.out.println("DAO find 4");
 			
 			String queryString = "from User u where u.email = :email";
 			
 			Query query = session.createQuery(queryString, User.class);
 			
-			System.out.println("DAO find 5");
-			
 			query.setParameter("email", email);
-			
-			System.out.println("DAO find 6");
+
 			User user = (User) query.uniqueResult();
-			
-			System.out.println("DAO find 7");
-			
-			System.out.println("userDao findbyemail");
 			
 			return user;
 			
@@ -186,6 +181,7 @@ public class UserDAO implements UserDAOInterface{
 //			}
 		finally {
 //			closeAll();
+			session.close();
 		}
 	}
 
@@ -196,13 +192,15 @@ public class UserDAO implements UserDAOInterface{
 			session = sf.openSession();
 			
 			begin();
-			
+			System.out.println("update transmission");
 			session.merge(user);
-			
+			System.out.println("update merged");
 			commit();
+			System.out.println("update committed");
 			
 		} finally {
 //			closeAll();
+			session.close();
 		}
 		
 	}
@@ -225,6 +223,7 @@ public class UserDAO implements UserDAOInterface{
 			
 		} finally {
 //			closeAll();
+			session.close();
 		}
 	}
 
@@ -247,7 +246,15 @@ public class UserDAO implements UserDAOInterface{
 			
 		} finally {
 //			closeAll();
+			session.close();
 		}
+	}
+	
+
+	public void printStats() {
+	    Statistics stats = sf.getStatistics();
+	    System.out.println("Active Connections: " + stats.getConnectCount());
+	    // Other stats can also be accessed
 	}
 
 }

@@ -53,6 +53,7 @@ public class SecurityConfig {
 				.usernameParameter("username")
 				.passwordParameter("password")
 				.successHandler(authSuccessHandler())
+//				.defaultSuccessUrl("/infinotes/user/home")
 				.failureUrl("/login?error=true")
 				
 			)

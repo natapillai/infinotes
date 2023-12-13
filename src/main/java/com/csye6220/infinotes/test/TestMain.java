@@ -17,15 +17,15 @@ public class TestMain {
 //		Note note = new Note();
 //		Role role = new Role();
 //		
-//		note.setNoteTitle("Test Title");
-//		note.setNoteContent("Test Content");
-//		note.setNoteCreatedDate(java.time.LocalDateTime.now());
-//		note.setNoteLastModifiedDate(java.time.LocalDateTime.now());
+////		note.setNoteTitle("Test Title");
+////		note.setNoteContent("Test Content");
+////		note.setNoteCreatedDate(java.time.LocalDateTime.now());
+////		note.setNoteLastModifiedDate(java.time.LocalDateTime.now());
 //
 //		
 //		User u = new User();
-//		u.setEmail("bob");
-//		u.setPassword("mclog");
+//		u.setEmail("admin@admin.com");
+//		u.setPassword("adminpass");
 ////		u.setRole("admin");
 //		
 ////		role.setRoleName("user");

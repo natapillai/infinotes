@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinotes - Admin Home</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	    <a class="navbar-brand" th:href="@{/admin/home}">Infinotes</a>
+	    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="navbar-toggler-icon"></span>
+	    </button>
+	    <div class="collapse navbar-collapse" id="navbarNav">
+	        <!-- Center-aligned Welcome Message -->
+	        <ul class="navbar-nav mx-auto">
+	            <li class="nav-item" style="margin-left: 375px;">
+	                <span class="navbar-text">Welcome, <span th:text="${user.email}">Admin</span>!</span>
+	            </li>
+	        </ul>
+	
+	        <!-- Right-aligned items -->
+	        <ul class="navbar-nav ml-auto">
+	            <li class="nav-item">
+	                <form th:action="@{/logout}" method="post" class="form-inline">
+	                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+	                    <button type="submit" class="btn btn-outline-danger">Logout</button>
+	                </form>
+	            </li>
+	        </ul>
+	    </div>
+	</nav>
+
+    <div class="container" style="margin-top: 130px;">
+        <div class="row">
+            <!-- Profile Card -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <img th:src="@{${user.imagePath}}" class="card-img-top" alt="Profile" style="height: 450px;" onerror="this.onerror=null;this.src='https://via.placeholder.com/150';">
+                    <div class="card-body">
+                        <h5 class="card-title">Profile</h5>
+                        <p class="card-text">View and edit your profile.</p>
+                        <button id="profilePage" class="btn btn-primary" th:onclick="'window.location.href=\'' + @{/admin/profile} + '\''">Go to Profile</button>
+                    </div>
+                </div>
+            </div>
+
+			<!-- Users Management Card -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <img th:src="@{/images/users.png}" class="card-img-top" alt="Users" style="height: 450px;">
+                    <div class="card-body">
+                        <h5 class="card-title">Users</h5>
+                        <p class="card-text">Access and manage all user accounts.</p>
+                        <button id="usersPage" class="btn btn-warning" th:onclick="'window.location.href=\'' + @{/admin/allusers} + '\''">Manage Users</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 package com.csye6220.infinotes.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,7 +48,11 @@ public class SignupController {
 	    }
 		
 		user.setEmail(userEmail);
-		user.setPassword(userPassword);
+		
+	    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(userPassword);
+	    user.setPassword(hashedPassword);
+		
 		
 		userService.addNewUser(user);
 		userService.saveRole(user);

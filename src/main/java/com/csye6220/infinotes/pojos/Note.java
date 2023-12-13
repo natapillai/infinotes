@@ -2,6 +2,8 @@ package com.csye6220.infinotes.pojos;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.stereotype.Component;
 
 import jakarta.persistence.CascadeType;
@@ -11,12 +13,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="note")
-@Component
+//@Component
 public class Note {
 
 	@Id
@@ -27,12 +30,15 @@ public class Note {
 	@Column(name="noteTitle")
 	private String noteTitle;
 	
+	@Lob
 	@Column(name="noteContent")
 	private String noteContent;
 	
-	@Column(name="noteCreatedDate")
+	@CreationTimestamp
+	@Column(name="noteCreatedDate", updatable = false)
 	private LocalDateTime noteCreatedDate;
 	
+	@UpdateTimestamp
 	@Column(name="noteLastModifiedDate")
 	private LocalDateTime noteLastModifiedDate;
 	
@@ -40,8 +46,6 @@ public class Note {
 	@JoinColumn(name = "id")
 	private User user;
 	
-//	private User user;
-	//do i need to assign each note to a specific user or just have each user have a list of all notes
 	
 	public Note(String noteTitle, String noteContent, LocalDateTime noteCreatedDate,
 			LocalDateTime noteLastModifiedDate) {
@@ -54,6 +58,13 @@ public class Note {
 	
 
 	public Note() {
+	}
+
+	
+
+
+	public int getNoteId() {
+		return noteId;
 	}
 
 

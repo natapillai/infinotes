@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="user")
-@Component
+//@Component
 public class User {
 	
 	@Id
@@ -32,6 +32,9 @@ public class User {
 	
 	@Column(name="password")
 	private String password;
+	
+	@Column(name="imagePath")
+	private String imagePath;
 	
 //	@Column(name="role")
 //	private String role;
@@ -80,6 +83,15 @@ public class User {
 		this.password = password;
 	}
 	
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+	
 	
 	
 //	public String getRole() {
@@ -101,11 +113,13 @@ public class User {
 	
 	public void setUserNote(Note note) {
 		this.userNotes.add(note);
+		note.setUser(this);
 	}
 	
 	public List<Note> getUserNotes(){
 		return this.userNotes;
 	}
+	
 
 	@Override
 	public String toString() {

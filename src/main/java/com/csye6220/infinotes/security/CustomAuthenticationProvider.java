@@ -31,58 +31,40 @@ public class CustomAuthenticationProvider  implements AuthenticationProvider {
 	RoleService roleService;
 	
 	UserDetails isValidUser(String username, String password) throws IOException {
-		System.out.println("point 0");
 		
 		User user = userService.findUserByEmail(username);
-
-		System.out.println("point 1");
+		
+	    if (user == null) {
+	        throw new UsernameNotFoundException("User not found");
+	    }
+		
+	    BCryptPasswordEncoder encoder = bCryptPasswordEncoder();
+	    if (!encoder.matches(password, user.getPassword())) {
+	        throw new BadCredentialsException("Invalid password");
+	    }
+		
 		
 		List<Role> roles = new ArrayList<>();
-
-		System.out.println("point 2");
 		
 		roleService.getAllRoles(user.getId()).forEach(roles::add);
 		
 		System.out.println(roles);
 		
-		System.out.println("point 3");
-		
 		Role role = roles.get(0);
+	
+		UserDetails userDetails;
 		
-		System.out.println(role + "    Current Role");
-		
-		System.out.println("point 4");
-		
-		String userPassWord = bCryptPasswordEncoder().encode(password);
-		
-		System.out.println("point 5");
-		
-		System.out.println(password);
-		System.out.println(userPassWord);
-		
-		System.out.println("point 6");
-		
-		System.out.println(user.getPassword());
-		
-		System.out.println("point 7");
-		
-		if (password.equals(user.getPassword())) {
-			
-			UserDetails userDetails;
-			
-			if (role.getRoleName().equals("Admin")) {
-				userDetails = org.springframework.security.core.userdetails.User.withUsername(username)
-					.password("NOT_DISCLOSED").roles(String.valueOf(role.getRoleName())).build();
-			} else {
-				userDetails = org.springframework.security.core.userdetails.User.withUsername(username)
-					.password("NOT_DISCLOSED").roles(String.valueOf(role.getRoleName())).build();
-			}
-
-			return userDetails;
-
+		if (role.getRoleName().equals("Admin")) {
+			userDetails = org.springframework.security.core.userdetails.User.withUsername(username)
+				.password("NOT_DISCLOSED").roles(String.valueOf(role.getRoleName())).build();
 		} else {
-			throw new BadCredentialsException("Please enter the correct credentials !!");
+			userDetails = org.springframework.security.core.userdetails.User.withUsername(username)
+				.password("NOT_DISCLOSED").roles(String.valueOf(role.getRoleName())).build();
 		}
+
+		return userDetails;
+
+		
 	}
 	
 	public static BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -91,19 +73,16 @@ public class CustomAuthenticationProvider  implements AuthenticationProvider {
 	
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		System.out.println("point auth 1");
 		
 		String username = authentication.getName();
 		String password = authentication.getCredentials().toString();
 
-		System.out.println("point auth 2");
 		
 		UserDetails userDetails;
 
 		try {
-			System.out.println("point auth 3");
 			userDetails = isValidUser(username, password);
-			System.out.println("point auth 4");
+
 			return new UsernamePasswordAuthenticationToken(username, password, userDetails.getAuthorities());
 
 		} catch (Exception e) {

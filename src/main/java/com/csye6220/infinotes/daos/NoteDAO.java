@@ -4,18 +4,16 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import com.csye6220.infinotes.pojos.Note;
 import com.csye6220.infinotes.pojos.Role;
-import com.csye6220.infinotes.pojos.User;
 import com.csye6220.infinotes.utils.HibernateUtils;
 
 @Repository
-public class RoleDAO implements RoleDAOInterface{
-	
+public class NoteDAO implements NoteDAOInterface{
+
 	private SessionFactory sf = HibernateUtils.getSessionFactory();
 	
 	private Session session = null;
@@ -34,118 +32,100 @@ public class RoleDAO implements RoleDAOInterface{
 	}
 	
 	@Override
-	public void addRole(Role role) {
+	public void saveNote(Note note) {
 		
 		try {
-//			session = sf.getCurrentSession();
 			session = sf.openSession();
 			
 			begin();
 			
-			session.persist(role);
+			session.persist(note);
 			
 			commit();
-			
 		} finally {
-			
-//			closeAll();
-			
+			// TODO: handle finally clause
 		}
 		
 	}
 
 	@Override
-	public Role findRoleByID(int id) {
+	public Note findNotebyID(int id) {
 		
 		try {
-//			session = sf.getCurrentSession();
+			session = sf.openSession();
+			
+			begin();
+			
+			String queryString = "from Note n where n.noteId = :id";
+			
+			Query query = session.createQuery(queryString, Note.class);
+			
+			query.setParameter("id", id);
+			
+			Note note = (Note) query.uniqueResult();
+			
+			return note;
+			
+		} finally {
+			
+		}
+		
+		
+	}
+
+	@Override
+	public Iterable getNotes(int id) {
+		
+		try {
+			session = sf.openSession();
+			
+			begin();
+			
+			String queryString = "from Note n where n.user.id = :id";
+			
+			Query query = session.createQuery(queryString, Note.class);
+			
+			query.setParameter("id", id);
+			
+			List<Note> notes = query.list();
+			
+			return notes;
+			
+		} finally {
+			
+		}
+	}
+
+	@Override
+	public void updateNote(Note note) {
+		
+		try {
 			session = sf.openSession();	
 			
 			begin();
 			
-			String queryString = "from Role r where r.id = :id";
+			session.merge(note);
 			
-			Query query = session.createQuery(queryString, Role.class);
-			
-			query.setParameter("id", id);
-			
-			Role role = (Role) query.uniqueResult();
-			
-			return role;
-			
+			commit();
 		} finally {
-			
-//			closeAll();
-			
+			// TODO: handle finally clause
 		}
 		
 	}
 
 	@Override
-	public Iterable getRoles(int id) {
+	public void deleteNote(Note note) {
 		
 		try {
-//			session = sf.getCurrentSession();
 			session = sf.openSession();
 			
 			begin();
 			
-			String queryString = "from Role r where r.user.id = :id";
-			
-			Query query = session.createQuery(queryString, Role.class);
-			
-			query.setParameter("id", id);
-			
-			List<Role> roles = query.list();
-			
-			return roles;
-			
-		} finally {
-
-//			closeAll();
-			
-		}
-		
-	}
-
-	@Override
-	public void updateRole(Role role) {
-		
-		try {
-//			session = sf.getCurrentSession();
-			session = sf.openSession();	
-			
-			begin();
-			
-			session.merge(role);
+			session.remove(note);
 			
 			commit();
-			
 		} finally {
-			
-//			closeAll();
-			
-		}
-		
-	}
-
-	@Override
-	public void deleteRole(Role role) {
-		
-		try {
-//			session = sf.getCurrentSession();
-			session = sf.openSession();
-			
-			begin();
-			
-			session.remove(role);
-			
-			commit();
-			
-		} finally {
-
-//			closeAll();
-			
+			// TODO: handle finally clause
 		}
 		
 	}

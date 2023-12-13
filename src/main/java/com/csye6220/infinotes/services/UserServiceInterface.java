@@ -2,6 +2,7 @@ package com.csye6220.infinotes.services;
 
 import java.util.List;
 
+import com.csye6220.infinotes.pojos.Note;
 import com.csye6220.infinotes.pojos.User;
 
 public interface UserServiceInterface {
@@ -20,4 +21,6 @@ public interface UserServiceInterface {
 	public void deleteUser(User user);
 	
 	void saveRole(User user);
+	
+	void saveNote(User user, Note note);
 }

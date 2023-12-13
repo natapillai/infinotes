@@ -12,32 +12,32 @@ import com.csye6220.infinotes.pojos.Role;
 public class RoleService implements RoleServiceInterface{
 
 	@Autowired
-	private RoleDAOInterface roleRepo;
+	private RoleDAOInterface roleDAO;
 	
 	@Override
 	public void addNewRoles(Role role) {
-		roleRepo.addRole(role);
+		roleDAO.addRole(role);
 	}
 
 	@Override
 	public Iterable<Role> getAllRoles(int id) {
-		return roleRepo.getRoles(id);
+		return roleDAO.getRoles(id);
 	}
 
 	@Override
 	public Role findRoleByID(int id) {
-		return roleRepo.findRoleByID(id);
+		return roleDAO.findRoleByID(id);
 	}
 
 	@Override
 	public void updateRoles(Role role) {
-		roleRepo.updateRole(role);
+		roleDAO.updateRole(role);
 		
 	}
 
 	@Override
 	public void deleteRoles(Role role) {
-		roleRepo.deleteRole(role);
+		roleDAO.deleteRole(role);
 		
 	}
 

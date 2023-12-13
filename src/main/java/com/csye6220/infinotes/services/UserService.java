@@ -1,12 +1,23 @@
 package com.csye6220.infinotes.services;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
+import org.hibernate.stat.Statistics;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.csye6220.infinotes.daos.UserDAO;
+import com.csye6220.infinotes.pojos.Note;
 import com.csye6220.infinotes.pojos.User;
+import com.csye6220.infinotes.utils.FileUploadUtil;
 
 @Service
 public class UserService implements UserServiceInterface{
@@ -50,6 +61,49 @@ public class UserService implements UserServiceInterface{
 		userDAO.saveRole(user);
 	}
 
+	public void uploadUserProfile(int userId, String email, String password, MultipartFile imageFile) throws IOException {
+	    User user = userDAO.findByID(userId);
+	    
+	    if (user != null) {
+	    
+		    user.setEmail(email);
+		    
+		    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	        String hashedPassword = passwordEncoder.encode(password);
+		    user.setPassword(hashedPassword);
+		    
+		    if (imageFile != null && !imageFile.isEmpty()) {
+		        String fileName = StringUtils.cleanPath(imageFile.getOriginalFilename());
+		        Path uploadDirectory = Paths.get("C://InfinotesImages//");
+	
+		        // Ensure directory exists or create it
+		        if (!Files.exists(uploadDirectory)) {
+		            Files.createDirectories(uploadDirectory);
+		        }
+	
+		        // Save the file
+		        Path filePath = uploadDirectory.resolve(fileName);
+		        Files.copy(imageFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+	
+		        // Set the user's imagePath
+		        user.setImagePath("/image/" + fileName);
+	
+		        
+		        
+		    }
+		    // Update the user in the database
+		    userDAO.update(user);
+	    }
+	}
 
+	@Override
+	public void saveNote(User user, Note note) {
+		userDAO.saveNote(user, note);	
+	}
 
+	public void printStats() {
+	    userDAO.printStats();
+	    // Other stats can also be accessed
+	}
+	
 }

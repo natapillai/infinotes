@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="role")
-@Component
+//@Component
 public class Role {
 	
 	@Id
