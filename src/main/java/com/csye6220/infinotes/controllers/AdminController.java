@@ -35,6 +35,13 @@ public class AdminController {
 		if (userId != null) {
             User user = userService.findUserByID(userId); // Method to find user by ID
             model.addAttribute("user", user);
+            
+            boolean isAdmin = false;
+            if(user.getUserRoles().get(0).getRoleName().equals("Admin")) {
+            	isAdmin = true;
+            }
+            model.addAttribute("isAdmin", isAdmin);
+            
         }
 		
 		return "adminhome-view";
@@ -51,16 +58,18 @@ public class AdminController {
     }
 	
 	@PostMapping("/admin/updateProfile")
-    public String updateProfile(@RequestParam("email") String email,
+    public String updateProfile(@RequestParam("fullName") String fullName,
+    							@RequestParam("email") String email,
                                 @RequestParam("password") String password,
                                 @RequestParam("image") MultipartFile image,
                                 HttpSession session) throws IOException {
         Integer userId = getUserIdFromSession(session);
         
+        System.out.println(fullName);
         System.out.println(email);
         System.out.println(password);
         
-        userService.uploadUserProfile(userId,email,password,image);
+        userService.uploadUserProfile(userId,fullName,email,password,image);
 
 //        user.setImagePath(image);
         

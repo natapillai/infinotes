@@ -7,8 +7,8 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
-import org.hibernate.stat.Statistics;
 
+import com.csye6220.infinotes.pojos.Contact;
 import com.csye6220.infinotes.pojos.Note;
 import com.csye6220.infinotes.pojos.Role;
 import com.csye6220.infinotes.pojos.User;
@@ -37,6 +37,7 @@ public class HibernateUtils {
 				configuration.addAnnotatedClass(User.class);
 				configuration.addAnnotatedClass(Role.class);
 				configuration.addAnnotatedClass(Note.class);
+				configuration.addAnnotatedClass(Contact.class);
 				
 				ServiceRegistry serviceRegistry =  new StandardServiceRegistryBuilder().applySettings(settings).build();
 				

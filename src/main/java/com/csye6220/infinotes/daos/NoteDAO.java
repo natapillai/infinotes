@@ -43,7 +43,7 @@ public class NoteDAO implements NoteDAOInterface{
 			
 			commit();
 		} finally {
-			// TODO: handle finally clause
+			session.close();
 		}
 		
 	}
@@ -67,9 +67,8 @@ public class NoteDAO implements NoteDAOInterface{
 			return note;
 			
 		} finally {
-			
+			session.close();
 		}
-		
 		
 	}
 
@@ -92,8 +91,9 @@ public class NoteDAO implements NoteDAOInterface{
 			return notes;
 			
 		} finally {
-			
+			session.close();
 		}
+		
 	}
 
 	@Override
@@ -108,7 +108,7 @@ public class NoteDAO implements NoteDAOInterface{
 			
 			commit();
 		} finally {
-			// TODO: handle finally clause
+			session.close();
 		}
 		
 	}
@@ -125,7 +125,7 @@ public class NoteDAO implements NoteDAOInterface{
 			
 			commit();
 		} finally {
-			// TODO: handle finally clause
+			session.close();
 		}
 		
 	}

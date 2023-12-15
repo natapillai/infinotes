@@ -28,11 +28,13 @@ public class SignupController {
 	@PostMapping("/signup")
 	public String submitSignUp(@ModelAttribute("user") User user, Model model, @RequestParam String confirmPassword) {
 		
+		String userFullName = user.getFullName();
 		String userEmail = user.getEmail();
 		String userPassword = user.getPassword();
 
 		System.out.println(userEmail);
 		System.out.println(userPassword);
+		System.out.println(userFullName);
 		System.out.println(confirmPassword);
 		
 	    // Check if user already exists
@@ -47,6 +49,8 @@ public class SignupController {
 	        return "signup-view";
 	    }
 		
+	    
+	    user.setFullName(userFullName);
 		user.setEmail(userEmail);
 		
 	    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

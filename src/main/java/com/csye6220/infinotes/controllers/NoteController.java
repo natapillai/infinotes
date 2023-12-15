@@ -35,7 +35,7 @@ public class NoteController {
 		Integer userId = getUserIdFromSession(session);
 		
 		if (userId != null) {
-            User user = userService.findUserByID(userId); // Method to find user by ID
+            User user = userService.findUserByID(userId);
             model.addAttribute("user", user);
         }
 		
@@ -55,7 +55,7 @@ public class NoteController {
 		Integer userId = getUserIdFromSession(session);
 		
 		if (userId != null) {
-            User user = userService.findUserByID(userId); // Method to find user by ID
+            User user = userService.findUserByID(userId);
             model.addAttribute("user", user);
         }
 		
@@ -91,13 +91,13 @@ public class NoteController {
 		Integer userId = getUserIdFromSession(session);
 		
 		if (userId != null) {
-            User user = userService.findUserByID(userId); // Method to find user by ID
+            User user = userService.findUserByID(userId);
             model.addAttribute("user", user);
         }
     	
         Note note = noteService.findNoteByID(noteId);
         model.addAttribute("note", note);
-        return "editNote-view"; // Name of the Thymeleaf template for editing a note
+        return "editNote-view";
     }
 	
     @PostMapping("/user/note/edit")
@@ -105,12 +105,6 @@ public class NoteController {
                                  @RequestParam("noteTitle") String noteTitle,
                                  @RequestParam("noteContent") String noteContent) {
         Note note = noteService.findNoteByID(noteId);
-
-//        if (note != null) {
-//            note.setNoteTitle(noteTitle);
-//            note.setNoteContent(noteContent);
-//            noteService.updateNotes(note); // Assuming save method handles both create and update
-//        }
         
         if (note != null) {
             boolean isChanged = false;
@@ -130,18 +124,17 @@ public class NoteController {
             }
         }
 
-        return "redirect:/user/notes"; // Redirect to the page where notes are listed
+        return "redirect:/user/notes"; 
     }
     
     @PostMapping("/infinotes/user/note/delete/{id}")
     public String deleteNote(@PathVariable("id") int noteId) {
     	Note note = noteService.findNoteByID(noteId);
         noteService.deleteNotes(note);
-        return "redirect:/user/notes"; // Redirect to the page where notes are listed
+        return "redirect:/user/notes"; 
     }
 	
     private Integer getUserIdFromSession(HttpSession session) {
-        // Implementation to retrieve userId from session
         return (Integer) session.getAttribute("userId");
     }
 }

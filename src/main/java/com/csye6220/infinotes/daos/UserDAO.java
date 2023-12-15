@@ -1,6 +1,10 @@
 package com.csye6220.infinotes.daos;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -12,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.csye6220.infinotes.pojos.Contact;
 import com.csye6220.infinotes.pojos.Note;
 import com.csye6220.infinotes.pojos.Role;
 import com.csye6220.infinotes.pojos.User;
@@ -126,10 +131,60 @@ public class UserDAO implements UserDAOInterface{
 			session.close();
 		}
 		
-		
-		
 	}
 	
+	@Override
+	public void saveContact(User user, Contact contact, MultipartFile image) throws IOException {
+		try {
+//			session = sf.getCurrentSession();
+			session = sf.openSession();
+			
+			begin();
+			
+			User u = session.get(User.class, user.getId());
+			
+			Contact c = new Contact();
+			
+			c.setUser(u);
+			
+			System.out.println("contact.getContactName() " + contact.getContactName());
+			System.out.println("contact.getContactEmail() " + contact.getContactEmail());
+			
+			c.setContactName(contact.getContactName());
+			c.setContactEmail(contact.getContactEmail());
+			c.setContactNumber(contact.getContactNumber());
+			c.setContactAddress(contact.getContactAddress());
+			
+			if (image != null && !image.isEmpty()) {
+		        String fileName = StringUtils.cleanPath(image.getOriginalFilename());
+		        Path uploadDirectory = Paths.get("C://InfinotesImages//");
+
+		        // Ensure directory exists or create it
+		        if (!Files.exists(uploadDirectory)) {
+		            Files.createDirectories(uploadDirectory);
+		        }
+
+		        // Save the file
+		        Path filePath = uploadDirectory.resolve(fileName);
+		        Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+		        // Set the user's imagePath
+		        c.setContactImagePath("/image/" + fileName);
+		        
+		    }
+			
+			u.setUserContact(c);
+			System.out.println("c.getContactName() " + c.getContactName());
+			System.out.println("c.getContactEmail() " + c.getContactEmail());
+			session.persist(c);
+			
+			commit();
+			
+		} finally {
+//			closeAll();
+			session.close();
+		}
+	}
 
 	@Override
 	public User findByID(int id) {

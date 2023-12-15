@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.csye6220.infinotes.daos.NoteDAOInterface;
-import com.csye6220.infinotes.daos.RoleDAO;
-import com.csye6220.infinotes.daos.RoleDAOInterface;
 import com.csye6220.infinotes.pojos.Note;
 
 @Service

@@ -27,6 +27,9 @@ public class User {
 	@Column(name="id")
 	private int id;
 	
+	@Column(name="fullName")
+	private String fullName;
+	
 	@Column(unique=true)
 	private String email;
 	
@@ -36,18 +39,16 @@ public class User {
 	@Column(name="imagePath")
 	private String imagePath;
 	
-//	@Column(name="role")
-//	private String role;
-	
-//	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-	@OneToMany(fetch = FetchType.LAZY,
+	@OneToMany(fetch = FetchType.EAGER,
 			   mappedBy="user",
-			   cascade= {CascadeType.PERSIST, CascadeType.MERGE,
-						 CascadeType.DETACH, CascadeType.REFRESH})
+			   cascade= {CascadeType.ALL})
 	List<Role> userRoles = new ArrayList<Role>();
 	
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade= {CascadeType.ALL})
 	List<Note> userNotes = new ArrayList<Note>();
+	
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade= {CascadeType.ALL})
+	List<Contact> userContacts = new ArrayList<Contact>();
 	
 	public User(String email, String password) {
 		this.email = email;
@@ -65,6 +66,14 @@ public class User {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 
 	public String getEmail() {
@@ -91,16 +100,6 @@ public class User {
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
-	
-	
-	
-//	public String getRole() {
-//		return role;
-//	}
-//
-//	public void setRole(String role) {
-//		this.role = role;
-//	}
 
 	public void addUserRole(Role role) {
 		this.userRoles.add(role);
@@ -120,10 +119,19 @@ public class User {
 		return this.userNotes;
 	}
 	
+	public void setUserContact(Contact contact) {
+		this.userContacts.add(contact);
+		contact.setUser(this);
+	}
+	
+	public List<Contact> getUserContacts(){
+		return this.userContacts;
+	}
+	
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", password=" + password;
+		return "User [id=" + id + ", email=" + email + ", password=" + password + "]";
 	}
 	
 }

@@ -6,6 +6,41 @@
     <title>Infinotes - Admin Home</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+	<style>
+        .switch-label {
+            font-weight: bold;
+            color: #007bff; /* Bootstrap primary color */
+        }
+
+        .label-admin {
+            position: relative;
+            right: 55px;
+            transition: all 0.3s ease;
+            color: #ffc107; /* Bootstrap success color */
+            transform: scale(1.1);
+        }
+
+        .label-user {
+            margin-left: 10px;
+            transition: all 0.3s ease;
+            color: #28a745; /* Bootstrap danger color */
+            transform: scale(0.9);
+        }
+        
+        .border-switch {
+			border: solid 2px #ffc107;
+	        display: inline-flex;
+	        transition: all 0.3s ease;
+	        border-radius: 5px;
+	        padding-left: 65px;
+	        padding-top: 5px;
+	        padding-right: 10px;
+	        margin-left: -63px;
+		}
+
+    </style>
+	
 </head>
 <body>
 	
@@ -18,7 +53,7 @@
 	        <!-- Center-aligned Welcome Message -->
 	        <ul class="navbar-nav mx-auto">
 	            <li class="nav-item" style="margin-left: 375px;">
-	                <span class="navbar-text">Welcome, <span th:text="${user.email}">Admin</span>!</span>
+	                <span class="navbar-text">Welcome, <span th:text="${user.fullName}">Admin</span>!</span>
 	            </li>
 	        </ul>
 	
@@ -33,6 +68,26 @@
 	        </ul>
 	    </div>
 	</nav>
+	
+    <!-- Mode Switch -->
+	<div th:if="${isAdmin}" class="container mt-4 text-center">
+	    <div class="custom-control custom-switch">
+			<div class="border-switch">
+				<!-- Label for Admin (left side) -->
+		        <label class="switch-label label-admin">Admin</label>
+		
+		        <input type="checkbox" class="custom-control-input" id="modeSwitch" onclick="toggleMode()">
+		        <label class="custom-control-label" for="modeSwitch"></label>
+		
+		        <!-- Label for User (right side) -->
+		        <label class="switch-label label-user">User</label>
+			</div>
+	    </div>
+	</div>
+
+	<!-- URLs for redirection (hidden) -->
+    <div id="userUrl" th:data-url="@{/user/home}" style="display:none;"></div>
+
 
     <div class="container" style="margin-top: 130px;">
         <div class="row">
@@ -61,6 +116,14 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function toggleMode() {
+            var userUrl = document.getElementById('userUrl').getAttribute('data-url');
+            // Redirect to User Mode
+            window.location.href = userUrl;
+        }
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

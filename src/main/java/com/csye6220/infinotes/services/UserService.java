@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.csye6220.infinotes.daos.UserDAO;
+import com.csye6220.infinotes.pojos.Contact;
 import com.csye6220.infinotes.pojos.Note;
 import com.csye6220.infinotes.pojos.User;
 import com.csye6220.infinotes.utils.FileUploadUtil;
@@ -61,16 +62,19 @@ public class UserService implements UserServiceInterface{
 		userDAO.saveRole(user);
 	}
 
-	public void uploadUserProfile(int userId, String email, String password, MultipartFile imageFile) throws IOException {
+	public void uploadUserProfile(int userId, String fullName, String email, String password, MultipartFile imageFile) throws IOException {
 	    User user = userDAO.findByID(userId);
 	    
 	    if (user != null) {
 	    
+	    	user.setFullName(fullName);
 		    user.setEmail(email);
 		    
-		    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-	        String hashedPassword = passwordEncoder.encode(password);
-		    user.setPassword(hashedPassword);
+	        if (password != null && !password.isEmpty()) {
+	            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	            String hashedPassword = passwordEncoder.encode(password);
+	            user.setPassword(hashedPassword);
+	        }
 		    
 		    if (imageFile != null && !imageFile.isEmpty()) {
 		        String fileName = StringUtils.cleanPath(imageFile.getOriginalFilename());
@@ -104,6 +108,11 @@ public class UserService implements UserServiceInterface{
 	public void printStats() {
 	    userDAO.printStats();
 	    // Other stats can also be accessed
+	}
+
+	@Override
+	public void saveContact(User user, Contact contact, MultipartFile image) throws IOException {
+		userDAO.saveContact(user, contact, image);
 	}
 	
 }
