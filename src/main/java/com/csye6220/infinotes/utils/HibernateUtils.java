@@ -24,9 +24,9 @@ public class HibernateUtils {
 				
 				Properties settings = new Properties();
 				settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-				settings.put(Environment.URL, "jdbc:mysql://localhost:3306/infinotesdb");
-				settings.put(Environment.USER, "root");
-				settings.put(Environment.PASS, "root");
+				settings.put(Environment.URL, "jdbc:mysql://infinotes.cnmgas2q6d9z.us-east-1.rds.amazonaws.com:3306/infinotesdb");
+				settings.put(Environment.USER, "admin");
+				settings.put(Environment.PASS, "rootpass2512");
 				settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");
 				settings.put(Environment.SHOW_SQL, "true");
 				settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");

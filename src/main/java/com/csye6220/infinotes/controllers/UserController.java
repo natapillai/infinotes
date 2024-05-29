@@ -2,6 +2,7 @@ package com.csye6220.infinotes.controllers;
 
 import java.io.IOException;
 
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.csye6220.infinotes.bucket.AmazonClient;
 import com.csye6220.infinotes.pojos.User;
 import com.csye6220.infinotes.services.UserService;
 
@@ -66,7 +68,22 @@ public class UserController {
 								@RequestParam("email") String email,
                                 @RequestParam("password") String password,
                                 @RequestParam("image") MultipartFile image,
-                                HttpSession session) throws IOException {
+                                HttpSession session,
+                                Model model) throws IOException {
+    	
+//    	// Check file size
+//        if (image.getSize() > 1048576) { // 1MB = 1048576 bytes
+//            model.addAttribute("errorMessage", "File should be below 1MB");
+//            return "profile"; // Return to the profile page
+//        }
+//
+//        // Check file type
+//        String contentType = image.getContentType();
+//        if (!("image/png".equals(contentType) || "image/jpeg".equals(contentType) || "image/webp".equals(contentType))) {
+//            model.addAttribute("errorMessage", "File type should be PNG, JPG, or WEBP");
+//            return "profile"; // Return to the profile page
+//        }
+    	
         Integer userId = getUserIdFromSession(session);
         
         System.out.println(fullName);

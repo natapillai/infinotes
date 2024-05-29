@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.stat.Statistics;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.csye6220.infinotes.bucket.AmazonClient;
 import com.csye6220.infinotes.daos.UserDAO;
 import com.csye6220.infinotes.pojos.Contact;
 import com.csye6220.infinotes.pojos.Note;
@@ -25,6 +27,9 @@ public class UserService implements UserServiceInterface{
 
 	@Autowired
 	private UserDAO userDAO;
+	
+	@Autowired
+	private AmazonClient amazonClient;
 	
 	@Override
 	public void addNewUser(User user) {
@@ -77,20 +82,27 @@ public class UserService implements UserServiceInterface{
 	        }
 		    
 		    if (imageFile != null && !imageFile.isEmpty()) {
-		        String fileName = StringUtils.cleanPath(imageFile.getOriginalFilename());
-		        Path uploadDirectory = Paths.get("C://InfinotesImages//");
-	
-		        // Ensure directory exists or create it
-		        if (!Files.exists(uploadDirectory)) {
-		            Files.createDirectories(uploadDirectory);
-		        }
-	
-		        // Save the file
-		        Path filePath = uploadDirectory.resolve(fileName);
-		        Files.copy(imageFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+		    	
+		    	
+		    	String fileName = new Date().getTime() + "-" + imageFile.getOriginalFilename().replace(" ", "_");
+		    	
+		    	this.amazonClient.uploadFile(imageFile, fileName);
+		    	
+//		        String fileName = StringUtils.cleanPath(imageFile.getOriginalFilename());
+//		        Path uploadDirectory = Paths.get("C://InfinotesImages//");
+//	
+//		        // Ensure directory exists or create it
+//		        if (!Files.exists(uploadDirectory)) {
+//		            Files.createDirectories(uploadDirectory);
+//		        }
+//	
+//		        // Save the file
+//		        Path filePath = uploadDirectory.resolve(fileName);
+//		        Files.copy(imageFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 	
 		        // Set the user's imagePath
-		        user.setImagePath("/image/" + fileName);
+//		        user.setImagePath("/image/" + fileName);
+		        user.setImagePath("https://s3.us-east-1.amazonaws.com/infinotesimagebucket/" + fileName);
 	
 		        
 		        
@@ -112,6 +124,12 @@ public class UserService implements UserServiceInterface{
 
 	@Override
 	public void saveContact(User user, Contact contact, MultipartFile image) throws IOException {
+//    	String fileName = new Date().getTime() + "-" + image.getOriginalFilename().replace(" ", "_");
+//    	
+//    	this.amazonClient.uploadFile(image, fileName);
+//    	
+//    	contact.setContactImagePath("https://s3.us-east-1.amazonaws.com/infinotesimagebucket/" + fileName);
+    	
 		userDAO.saveContact(user, contact, image);
 	}
 	

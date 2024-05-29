@@ -46,9 +46,9 @@ public class CustomAuthSuccessHandler implements AuthenticationSuccessHandler{
 
 		
 		if(isAdmin) {
-			response.sendRedirect("/infinotes/admin/home");
+			response.sendRedirect("/admin/home");
 		} else {
-			response.sendRedirect("/infinotes/user/home");
+			response.sendRedirect("/user/home");
 		}
 		
 	}

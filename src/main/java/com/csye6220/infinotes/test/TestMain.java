@@ -24,7 +24,7 @@ public class TestMain {
 //
 //		
 //		User u = new User();
-//		u.setEmail("admin@admin.com");
+//		u.setEmail("admin@infinotes.com");
 //		u.setPassword("adminpass");
 ////		u.setRole("admin");
 //		

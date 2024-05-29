@@ -85,7 +85,7 @@ public class NoteController {
 		return "redirect:/user/notes";
 	}
 	
-    @GetMapping("/infinotes/user/note/edit/{id}")
+    @GetMapping("/user/note/edit/{id}")
     public String editNote(@PathVariable("id") int noteId, Model model, HttpSession session) {
     	
 		Integer userId = getUserIdFromSession(session);
@@ -127,7 +127,7 @@ public class NoteController {
         return "redirect:/user/notes"; 
     }
     
-    @PostMapping("/infinotes/user/note/delete/{id}")
+    @PostMapping("/user/note/delete/{id}")
     public String deleteNote(@PathVariable("id") int noteId) {
     	Note note = noteService.findNoteByID(noteId);
         noteService.deleteNotes(note);

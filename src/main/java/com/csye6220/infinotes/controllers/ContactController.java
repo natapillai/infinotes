@@ -94,7 +94,7 @@ public class ContactController {
 		return "redirect:/user/contacts";
 	}
 	
-	@GetMapping("/infinotes/user/contact/edit/{id}")
+	@GetMapping("/user/contact/edit/{id}")
     public String editNote(@PathVariable("id") int contactId, Model model, HttpSession session) {
     	
 		Integer userId = getUserIdFromSession(session);
@@ -144,7 +144,7 @@ public class ContactController {
        return "redirect:/user/contacts"; 
     }
    
-    @PostMapping("/infinotes/user/contact/delete/{id}")
+    @PostMapping("/user/contact/delete/{id}")
     public String deleteNote(@PathVariable("id") int contactId) {
     	Contact contact = contactService.findContactByID(contactId);
         contactService.deleteContacts(contact);

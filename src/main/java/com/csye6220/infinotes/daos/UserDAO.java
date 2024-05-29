@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.csye6220.infinotes.bucket.AmazonClient;
 import com.csye6220.infinotes.pojos.Contact;
 import com.csye6220.infinotes.pojos.Note;
 import com.csye6220.infinotes.pojos.Role;
@@ -29,6 +31,9 @@ public class UserDAO implements UserDAOInterface{
 
 	@Autowired
 	RoleService roleService;
+	
+	@Autowired
+	private AmazonClient amazonClient;
 	
 	private SessionFactory sf = HibernateUtils.getSessionFactory();
 	
@@ -156,20 +161,25 @@ public class UserDAO implements UserDAOInterface{
 			c.setContactAddress(contact.getContactAddress());
 			
 			if (image != null && !image.isEmpty()) {
-		        String fileName = StringUtils.cleanPath(image.getOriginalFilename());
-		        Path uploadDirectory = Paths.get("C://InfinotesImages//");
-
-		        // Ensure directory exists or create it
-		        if (!Files.exists(uploadDirectory)) {
-		            Files.createDirectories(uploadDirectory);
-		        }
-
-		        // Save the file
-		        Path filePath = uploadDirectory.resolve(fileName);
-		        Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+				String fileName = new Date().getTime() + "-" + image.getOriginalFilename().replace(" ", "_");
+		    	
+		    	this.amazonClient.uploadFile(image, fileName);
+		    	
+		    	c.setContactImagePath("https://s3.us-east-1.amazonaws.com/infinotesimagebucket/" + fileName);
+//		        String fileName = StringUtils.cleanPath(image.getOriginalFilename());
+//		        Path uploadDirectory = Paths.get("C://InfinotesImages//");
+//
+//		        // Ensure directory exists or create it
+//		        if (!Files.exists(uploadDirectory)) {
+//		            Files.createDirectories(uploadDirectory);
+//		        }
+//
+//		        // Save the file
+//		        Path filePath = uploadDirectory.resolve(fileName);
+//		        Files.copy(image.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
 		        // Set the user's imagePath
-		        c.setContactImagePath("/image/" + fileName);
+//		        c.setContactImagePath("/image/" + fileName);
 		        
 		    }
 			
