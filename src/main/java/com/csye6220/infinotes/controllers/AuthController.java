@@ -26,10 +26,10 @@ public class AuthController {
 		return "index-view";
 	}
 	
-	@GetMapping("/login")
-	public String loginPageHandler() {
-		return "login-view";
-	}
+//	@GetMapping("/login")
+//	public String loginPageHandler() {
+//		return "login-view";
+//	}
 	
 	@GetMapping("/login-auth")
 	public String loginAuthPageHandler(@RequestParam String username, @RequestParam String password, HttpServletRequest req) {
@@ -39,10 +39,10 @@ public class AuthController {
 		return "login-success";
 	}
 	
-	@GetMapping("/signup")
-	public String signupPageHandler() {
-		
-		return "signup-view";
-	}
+//	@GetMapping("/signup")
+//	public String signupPageHandler() {
+//		
+//		return "signup-view";
+//	}
 	
 }

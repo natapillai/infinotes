@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class IndexController {
 
-	@GetMapping("/")
-	public String indexPageHandler() {
-		return "index-view";
-	}
+//	@GetMapping("/")
+//	public String indexPageHandler() {
+//		return "index-view";
+//	}
 	
 }

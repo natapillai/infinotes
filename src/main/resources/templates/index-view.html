@@ -34,6 +34,17 @@
             background-color: #3d70b2;
             border-color: #3d70b2;
         }
+        .card {
+            margin-top: 20px;
+            border: 1px solid #3d70b2; /* Add border color */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+        }
+        .card-body {
+            background-color: #ffffff; /* Add background color to card body */
+        }
+        .card-title {
+            color: #3d70b2; /* Change card title color */
+        }
     </style>
 </head>
 <body>
@@ -47,6 +58,17 @@
 
     <!-- Sign Up Button -->
     <a th:href="@{/signup}" class="btn btn-outline-secondary">Sign Up</a>
+    
+    <!-- Instruction Card -->
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Instructions</h5>
+            <p class="card-text">To access the Admin portal, use the following credentials:<br>
+            <strong>Email:</strong> admin@infinotes.com<br>
+            <strong>Password:</strong> adminpass</p>
+            <p class="card-text">Alternatively, you can create your own account using the Sign Up page and log in with your new credentials.</p>
+        </div>
+    </div>
 </div>
 
 <!-- Bootstrap JS, Popper.js, and jQuery -->
