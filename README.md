@@ -35,24 +35,24 @@ Infinotes is a scalable note-taking platform developed using Java Spring Boot wi
 ### Installation
 
 1. Clone the repository:
-    \```bash
+    ```bash
     git clone https://github.com/natapillai/infinotes.git
     cd infinotes
-    \```
+    ```
 
 2. Set up the database on Amazon RDS and configure Amazon S3 for file storage.
 
 3. Update the `application.properties` file with your database and AWS credentials.
 
 4. Build the project using Maven:
-    \```bash
+    ```bash
     mvn clean install
-    \```
+    ```
 
 5. Run the application:
-    \```bash
+    ```bash
     mvn spring-boot:run
-    \```
+    ```
 
 ## Deployment
 
