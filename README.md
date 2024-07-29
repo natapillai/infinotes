@@ -8,6 +8,9 @@
 
 Infinotes is a scalable note-taking platform developed using Java Spring Boot with MVC architecture. The platform supports profile customization and CRUD operations on notes and contacts.
 
+## UI screenshot
+![home](src/main/resources/images/ui.png)
+
 ## Features
 
 - **Profile Customization**: Users can personalize their profiles.
